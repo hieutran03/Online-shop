@@ -1,3 +1,4 @@
-import { UserHandler } from "./users.handler";
+import { FindByIdHandler } from "./find-by-id.handler";
+import { FindByUserNameHandler } from "./find-by-username.handler";
 
-export const UsersQueryHandlers = [UserHandler]
+export const UsersQueryHandlers = [FindByUserNameHandler, FindByIdHandler]

@@ -1,6 +1,6 @@
 import { IMapper } from "src/common/interfaces/mapper.interface";
-import { UsersEntiy } from "./entities/users.entity";
-import { UserModel } from "./events/user.model";
+import { UsersEntiy } from "../entities/users.entity";
+import { UserModel } from "../events/user.model";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

@@ -2,7 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../impl/create-user.command';
 import { Repository } from 'typeorm';
 import { UsersEntiy } from '../../entities/users.entity';
-import { UsersMapper } from '../../users.mapper';
+import { UsersMapper } from '../../mappers/users.mapper';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @CommandHandler(CreateUserCommand)

@@ -5,7 +5,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../commands/impl/create-user.command';
-import { UserByUsernameQuery } from '../queries/impl/user-by-username.query';
+import { FindByUsernameQuery } from '../queries/impl/find-by-username.query';
+import { FindByIdQuery } from '../queries/impl/find-by-id.query';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +25,10 @@ export class UsersService {
   }
   findByUsername(username: string){
     // return this.userRepository.findOne({where: {username}});
-    return this.queryBus.execute(new UserByUsernameQuery(username));
+    return this.queryBus.execute(new FindByUsernameQuery(username));
+  }
+
+  findById(id: number){
+    return this.queryBus.execute(new FindByIdQuery(id));
   }
 }

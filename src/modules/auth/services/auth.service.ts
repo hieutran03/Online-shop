@@ -13,6 +13,29 @@ export class AuthService {
     private readonly configService: ConfigService
   ){}
 
+  public async getAuthenticatedUser(username: string, plainTextPassword: string) {
+    try {
+      const user = await this.usersService.findByUsername(username);
+      if(!user){
+        throw new BadRequestException('Wrong Wrong credentials provided')
+      }
+      await this.verifyPassword(plainTextPassword, user.password);
+      return user;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('Wrong Wrong credentials provided')
+    }
+  }
+  
+  private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
+    const isPasswordMatching = await bcrypt.compare(
+      plainTextPassword,
+      hashedPassword
+    );
+    if (!isPasswordMatching) {
+      throw new BadRequestException('Wrong credentials provided');
+    }
+  }
 
   async register(createUserDto: CreateUserDto){
     const hashedPassword = await bcrypt.hash(createUserDto.password, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
@@ -28,7 +51,14 @@ export class AuthService {
     return res;
   }
 
-  async login(){
-    
+  public getCookieWithJwtToken(userId: number) {
+    const payload = { userId };
+    const token = this.jwtService.sign(payload);
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRATION_TIME')}`;
   }
+
+  public getCookieForLogOut() {
+    return 'Authentication=; HttpOnly; Path=/; Max-Age=0';
+  }
+
 }

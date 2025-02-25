@@ -3,7 +3,7 @@ import { UsersController } from './controllers/users.controller';
 import { UsersService } from './services/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersEntiy } from './entities/users.entity';
-import { UsersMapper } from './users.mapper';
+import { UsersMapper } from './mappers/users.mapper';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UsersEventHandlers } from './events/handler';
 import { UsersQueryHandlers } from './queries/handler';
@@ -21,7 +21,7 @@ import { HttpExceptionFilter } from 'src/core/filters/http-exeption.filter';
     UsersMapper,
     ...UsersEventHandlers,
     ...UsersQueryHandlers,
-    ...UsersCommandHandlers,
+    ...UsersCommandHandlers, 
   ],
   exports: [UsersService]
 })

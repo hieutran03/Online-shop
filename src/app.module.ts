@@ -8,6 +8,7 @@ import * as Joi from '@hapi/joi';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/filters/http-exeption.filter';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { HttpExceptionFilter } from './core/filters/http-exeption.filter';
         PORT: Joi.number(),
       }),
     }),
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [
