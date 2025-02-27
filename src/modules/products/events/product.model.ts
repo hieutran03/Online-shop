@@ -1,11 +1,15 @@
+import { CategoryEntity } from "src/modules/category/entities/category.entity";
+
 export class ProductModel{
   constructor(
     private readonly id: number,
     private readonly name: string,
     private readonly description: string,
     private readonly images: string,
-    private readonly createdDate: string,
-    private readonly deleted: boolean
+    private readonly price: number,
+    private readonly categories: CategoryEntity[],
+    private readonly createdDate: Date,
+    private readonly deleteAt: Date
   ){}
 
   getId(){
@@ -24,11 +28,19 @@ export class ProductModel{
     return this.images;
   }
 
+  getPrice(){
+    return this.price;
+  }
+
+  getCategories(){
+    return this.categories;
+  }
+
   getCreatedDate(){
     return this.createdDate
   }
 
-  getDeleted(){
-    return this.deleted;
+  getDeleteAt(){
+    return this.deleteAt;
   }
 }

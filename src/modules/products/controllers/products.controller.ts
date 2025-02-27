@@ -13,8 +13,13 @@ export class ProductsController {
   ){}
 
   @Get()
-  queryByFilter(@Query() queryFilterDto: QueryFilterDto){
+  findByFilter(@Query() queryFilterDto: QueryFilterDto){
     return this.productService.findByFilter(queryFilterDto);
+  }
+
+  @Get(':productId')
+  findById(@Param('productId') productId){
+    return this.productService.findById(productId);
   }
 
   @UseGuards(RBACGuard([UserRole.ADMIN]))

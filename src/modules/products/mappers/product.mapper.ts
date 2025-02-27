@@ -9,8 +9,10 @@ export class ProductMapper implements IMapper<ProductEntity, ProductModel>{
       entity.name,
       entity.description,
       entity.images,
+      entity.price,
+      entity.categories,
       entity.createdDate,
-      entity.deleted
+      entity.deleteAt
     )
   }
 
@@ -20,8 +22,10 @@ export class ProductMapper implements IMapper<ProductEntity, ProductModel>{
       name: model.getName(),
       description: model.getDescription(),
       images: model.getImages(),
+      price: model.getPrice(),
+      categories: model.getCategories(),
       createdDate: model.getCreatedDate(),
-      deleted: model.getDeleted()
+      deleteAt: model.getDeleteAt()
     })
   }
 }

@@ -22,8 +22,7 @@ export class DeleteProductHandler
       
       if (!product) throw new BadRequestException('Invallid product id');
       
-      product.deleted = true;
-      response = await entityManager.save(product);
+      response = await entityManager.softDelete(ProductEntity, productId);
     });
     return response;
   }

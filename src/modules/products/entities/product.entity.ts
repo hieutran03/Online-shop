@@ -1,7 +1,8 @@
+import { CategoryEntity } from "../../../modules/category/entities/category.entity";
 import { AbstractEntity } from "../../../database/abstract-entity";
-import { Column, CreateDateColumn, Entity } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany } from "typeorm";
 
-@Entity()
+@Entity({name: 'products'})
 export class ProductEntity extends AbstractEntity<ProductEntity>{
   @Column()
   name: string;
@@ -12,9 +13,16 @@ export class ProductEntity extends AbstractEntity<ProductEntity>{
   @Column()
   images: string;
 
-  @CreateDateColumn({name: 'created_date'})
-  createdDate: string;
+  @Column()
+  price: number;
 
-  @Column({default: false, nullable: true})
-  deleted: boolean;
+  @ManyToMany(()=>CategoryEntity, {onDelete: 'CASCADE'})
+  @JoinTable({name: "product_category"})
+  categories: CategoryEntity[];
+
+  @CreateDateColumn({name: 'created_date'})
+  createdDate: Date;
+
+  @DeleteDateColumn({name: 'delete_at'})
+  deleteAt: Date;
 }

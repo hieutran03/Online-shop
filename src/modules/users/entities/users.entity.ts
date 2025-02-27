@@ -1,5 +1,6 @@
+import CartEntity from "../../../modules/cart/entities/cart.entity";
 import { AbstractEntity } from "../../../database/abstract-entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -26,5 +27,12 @@ export class UsersEntiy extends AbstractEntity<UsersEntiy>{
   password: string;
 
   @Column()
-  email: string
+  email: string;
+
+  @Column({name: 'cart_id'})
+  cartId: number
+
+  @OneToOne(() => CartEntity, (cart) => cart.user, {cascade: true})
+  @JoinColumn({ name: 'cart_id' })
+  cart: CartEntity;
 }

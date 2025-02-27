@@ -1,3 +1,4 @@
-import { QueryByFilterHandler } from "./query-by-filter.handler";
+import { FindByFilterHandler } from "./find-by-filter.handler";
+import { FindByIdHandler } from "./find-by-id.handler";
 
-export const ProductQueryHandler = [QueryByFilterHandler]
+export const ProductQueryHandler = [FindByFilterHandler, FindByIdHandler]

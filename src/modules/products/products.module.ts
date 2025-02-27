@@ -7,6 +7,7 @@ import { ProductEntity } from './entities/product.entity';
 import { ProductEventHandler } from './events/handler';
 import { ProductCommandHandler } from './commands/handler';
 import { ProductQueryHandler } from './queries/handler';
+import { CategoryEntity } from '../category/entities/category.entity';
 
 @Module({
   controllers: [ProductsController],
@@ -17,9 +18,8 @@ import { ProductQueryHandler } from './queries/handler';
     ...ProductQueryHandler
   ],
   imports: [
-    TypeOrmModule.forFeature([ProductEntity]),
+    TypeOrmModule.forFeature([ProductEntity, CategoryEntity]),
     CqrsModule,
-    
   ]
 })
 export class ProductsModule {}

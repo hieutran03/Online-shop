@@ -1,5 +1,5 @@
-import { DeleteProductCommand } from "../impl/delete-propduct.command";
-import { UpdateProductCommand } from "../impl/update-product.command";
 import { CreateProductHandler } from "./create-product.handler";
+import { DeleteProductHandler } from "./delete-product.handler";
+import { UpdateProductHandler } from "./update-product.handler";
 
-export const ProductCommandHandler = [CreateProductHandler, UpdateProductCommand, DeleteProductCommand]
+export const ProductCommandHandler = [CreateProductHandler, UpdateProductHandler, DeleteProductHandler];

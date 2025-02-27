@@ -21,7 +21,7 @@ export class UsersService {
     // });
     // const response = await this.userRepository.save(newUser);
     // return response;
-    return this.commandBus.execute(new CreateUserCommand(createUserDto)).catch(()=>{console.log('haha')});
+    return this.commandBus.execute(new CreateUserCommand(createUserDto)).catch((e)=>{console.log(e)});
   }
   findByUsername(username: string){
     // return this.userRepository.findOne({where: {username}});

@@ -9,12 +9,16 @@ import { UsersEventHandlers } from './events/handler';
 import { UsersQueryHandlers } from './queries/handler';
 import { UsersCommandHandlers } from './commands/handler';
 import { HttpExceptionFilter } from 'src/core/filters/http-exeption.filter';
+import CartEntity from '../cart/entities/cart.entity';
+import { CartModule } from '../cart/cart.module';
+import { UserCartController } from './controllers/user-cart.controller';
 
 @Module({
-  controllers: [UsersController],
+  controllers: [UsersController, UserCartController],
   imports: [
-    TypeOrmModule.forFeature([UsersEntiy]),
-    CqrsModule
+    TypeOrmModule.forFeature([UsersEntiy, CartEntity]),
+    CqrsModule,
+    CartModule
   ],
   providers: [
     UsersService,

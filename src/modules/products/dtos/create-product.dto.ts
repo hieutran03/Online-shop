@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsArray, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateProductDto{
   @IsString()
@@ -10,4 +10,10 @@ export class CreateProductDto{
   @IsString()
   @IsOptional()
   images: string;
+
+  @IsArray()
+  categories: number[];
+
+  @IsNumber()
+  price: number;
 }
