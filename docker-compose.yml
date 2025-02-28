@@ -1,6 +1,21 @@
 version: '3.9'
 
 services:
+  cache:
+    image: redis:7.4.2-alpine
+    container_name: redis_cache
+    ports:
+      - '6379:6379'
+    networks:
+      - my-network
+  queue:
+    image: rabbitmq:3.9.7-management
+    container_name: rabbitmq_queue
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - my-network
   db:
     image: postgres:15
     restart: always
@@ -31,6 +46,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      - cache
 
     networks:
       - my-network

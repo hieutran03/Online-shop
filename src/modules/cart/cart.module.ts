@@ -8,12 +8,16 @@ import { CartService } from './services/cart.service';
 import { CartQueryHandlers } from './queries/handler';
 import { CartCommandHandlers } from './commands/handler';
 import { CartController } from './controllers/cart.controller';
+import { CartMapper } from './mappers/cart.mapper';
+import { CartEventHandlers } from './events/handler';
 
 @Module({
   providers: [
     CartService,
+    CartMapper,
     ...CartQueryHandlers,
-    ...CartCommandHandlers
+    ...CartCommandHandlers,
+    ...CartEventHandlers
   ],
   controllers: [CartController],
   imports: [
