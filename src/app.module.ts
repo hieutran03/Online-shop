@@ -13,9 +13,11 @@ import { CategoryModule } from './modules/category/category.module';
 import { CartModule } from './modules/cart/cart.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './config/redis.config';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
+    EmailModule,
     UsersModule,
     AuthModule,
     DatabaseModule,

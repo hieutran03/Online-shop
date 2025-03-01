@@ -16,7 +16,6 @@ export class FindByIdHandler implements IQueryHandler<FindByIdQuery> {
 
   async execute({id}: FindByIdQuery) {
     let cart = JSON.parse(await this.cacheManager.get(`cart-${id}`));
-    console.log(cart);
     if(!cart){
       cart = await this.repository.findOne({
         where: {id},

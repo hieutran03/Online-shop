@@ -15,7 +15,6 @@ export class UpdateCartHander implements IEventHandler<UpdateCartEvent>{
   ){}
   async handle({cartItem, totalPrice}: UpdateCartEvent){
     let cart = JSON.parse(await this.cacheManager.get(`cart-${cartItem.cartId}`));
-    console.log(cart); 
     if(!cart){
       cart = {
         cartItems: [],
@@ -29,13 +28,7 @@ export class UpdateCartHander implements IEventHandler<UpdateCartEvent>{
     });
 
     if(cartItem.quantity === 0){
-      // console.log('hahaha')
-      // console.log(cartItem.productId)
-      // console.log(cart)
-      console.log(cart.cartItems)
-
       cart.cartItems = cart.cartItems.filter((item) => item.productId !== +cartItem.productId);
-      // console.log(cart)
     }else{
       const item = cart.cartItems.find((item) => item.productId === cartItem.productId);
       if(item){
@@ -44,8 +37,7 @@ export class UpdateCartHander implements IEventHandler<UpdateCartEvent>{
         cart.cartItems.push(newCartItem);
       }
     }
-    // console.log("=====")
-    // console.log(cart)
+
     cart.totalPrice = totalPrice;
     await this.cacheManager.set(`cart-${cartItem.cartId}`, JSON.stringify(cart));
   }

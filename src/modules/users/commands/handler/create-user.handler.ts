@@ -21,7 +21,6 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       cart
     });
     const userEntity = await this.usersRepository.save(newUser)
-    console.log(userEntity)
     // userEntity.cartId = cart.id;
     const user = this.eventPublisher.mergeObjectContext(
       this.usersMapper.mapEntityToModel(userEntity)

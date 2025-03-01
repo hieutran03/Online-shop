@@ -39,6 +39,10 @@ export class UserModel extends AggregateRoot{
   }
 
   createUser(){
-    this.apply(new UserCreatedEvent());
+    this.apply(new UserCreatedEvent({
+      email: this.email,
+      subject: 'Welcome',
+      html: `<h1>Welcome to Online Shop ${this.name}</h1>`
+    }));
   }
 }

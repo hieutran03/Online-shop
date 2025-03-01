@@ -12,13 +12,15 @@ import { HttpExceptionFilter } from 'src/core/filters/http-exeption.filter';
 import CartEntity from '../cart/entities/cart.entity';
 import { CartModule } from '../cart/cart.module';
 import { UserCartController } from './controllers/user-cart.controller';
+import { QueueModule } from '../queue/queue.module';
 
 @Module({
   controllers: [UsersController, UserCartController],
   imports: [
     TypeOrmModule.forFeature([UsersEntiy, CartEntity]),
     CqrsModule,
-    CartModule
+    CartModule,
+    QueueModule,
   ],
   providers: [
     UsersService,
