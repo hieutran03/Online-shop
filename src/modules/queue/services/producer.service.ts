@@ -9,7 +9,10 @@ import { EmailInterface } from 'src/common/interfaces/email.interface';
 export class ProducerService {
   private channelWrapper: ChannelWrapper;
   constructor(private readonly configService: ConfigService) {
-    const connection = amqp.connect(['amqps://beocynid:2u8ZbjgZUjH2uSurQkc06rufJx_N2vAR@leopard.lmq.cloudamqp.com/beocynid']);
+    const uri = this.configService.get('NODE_ENV') === 'production' 
+      ? this.configService.get('CLOUDAMQP_URL') 
+      : 'amqps://beocynid:2u8ZbjgZUjH2uSurQkc06rufJx_N2vAR@leopard.lmq.cloudamqp.com/beocynid';
+    const connection = amqp.connect([uri]);
     this.channelWrapper = connection.createChannel({
       setup: (channel: Channel) => {
         return channel.assertQueue('emailQueue', { durable: true });
