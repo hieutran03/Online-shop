@@ -1,16 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../../users/services/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/modules/users/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { SigninDto } from '../dtos/sign-in.dto';
+import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
+import { CommandBus } from '@nestjs/cqrs';
+import { ForgotPasswordCommand } from '../commands/impl/forgot-password.command';
+import { PasswordGeneratorUtil } from 'src/common/utils/password-gentaror.util';
+import { ResetPasswordCommand } from '../commands/impl/reset-password.command';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly commandBus: CommandBus,
   ){}
 
   public async getAuthenticatedUser(username: string, plainTextPassword: string) {
@@ -26,7 +32,7 @@ export class AuthService {
       throw new BadRequestException('Wrong Wrong credentials provided')
     }
   }
-  
+
   private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
     const isPasswordMatching = await bcrypt.compare(
       plainTextPassword,
@@ -37,16 +43,17 @@ export class AuthService {
     }
   }
 
-  async register(createUserDto: CreateUserDto){
-    const hashedPassword = await bcrypt.hash(createUserDto.password, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
-    const existedUser = await this.usersService.findByUsername(createUserDto.username);
+  async register(siginDto: SigninDto){
+    const hashedPassword = await bcrypt.hash(siginDto.password, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
+    const existedUser = await this.usersService.findByUsername(siginDto.username);
     if(existedUser){
       throw new BadRequestException('username is existed');
     }
     
     const res = await this.usersService.createUser({
-      ...createUserDto,
-      password: hashedPassword
+      ...siginDto,
+      password: hashedPassword,
+      role: undefined
     });
     return res;
   }
@@ -61,4 +68,26 @@ export class AuthService {
     return 'Authentication=; HttpOnly; Path=/; Max-Age=0';
   }
 
+  public async forgotPassword(forgotPasswordDto: ForgotPasswordDto){
+    const user = await this.usersService.findByUsername(forgotPasswordDto.username);
+    if(!user){
+      throw new BadRequestException('User not found');
+    }
+    const newPasssword = PasswordGeneratorUtil.generatePassword()
+    const hashedPassword = await bcrypt.hash(newPasssword, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
+    await this.commandBus.execute(new ForgotPasswordCommand(
+      user.id,
+      newPasssword,
+      hashedPassword
+    ));
+  }
+
+  public async resetPassword(body){
+    const hashedPassword = await bcrypt.hash(body.password, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
+    const user = await this.usersService.findById(body.id);
+    if(!user){
+      throw new BadRequestException('User not found');
+    }
+    await this.commandBus.execute(new ResetPasswordCommand(user.id, hashedPassword))
+  }
 }

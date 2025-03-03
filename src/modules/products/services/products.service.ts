@@ -6,8 +6,7 @@ import { CreateProductDto } from '../dtos/create-product.dto';
 import { CreateProductCommand } from '../commands/impl/create-product.command';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { UpdateProductCommand } from '../commands/impl/update-product.command';
-import { DeleteProductCommand } from '../commands/impl/delete-propduct.command';
-import { FindByIdHandler } from '../queries/handler/find-by-id.handler';
+import { DeleteProductCommand } from '../commands/impl/delete-product.command';
 import { FindByIdQuery } from '../queries/impl/find-by-id.query';
 
 @Injectable()

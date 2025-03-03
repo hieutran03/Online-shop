@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { DeleteProductCommand } from '../impl/delete-propduct.command';
+import { DeleteProductCommand } from '../impl/delete-product.command';
 import { EntityManager, Repository } from 'typeorm';
 import { ProductEntity } from '../../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';

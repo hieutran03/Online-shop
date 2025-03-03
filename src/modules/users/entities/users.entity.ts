@@ -1,6 +1,6 @@
 import CartEntity from "../../../modules/cart/entities/cart.entity";
 import { AbstractEntity } from "../../../database/abstract-entity";
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, DeleteDateColumn, Entity, JoinColumn, OneToOne } from "typeorm";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -35,4 +35,7 @@ export class UsersEntiy extends AbstractEntity<UsersEntiy>{
   @OneToOne(() => CartEntity, (cart) => cart.user, {cascade: true})
   @JoinColumn({ name: 'cart_id' })
   cart: CartEntity;
+
+  @DeleteDateColumn({name: 'delete_at'})
+  deletedAt: Date;
 }

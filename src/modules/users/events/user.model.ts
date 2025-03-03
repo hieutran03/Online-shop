@@ -1,6 +1,7 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 import { UserRole } from "../entities/users.entity";
 import { UserCreatedEvent } from "./impl/user-created.event";
+import { ForgotPasswordEvent } from "./impl/forgot-password.event";
 
 export class UserModel extends AggregateRoot{
   constructor(
@@ -44,5 +45,14 @@ export class UserModel extends AggregateRoot{
       subject: 'Welcome',
       html: `<h1>Welcome to Online Shop ${this.name}</h1>`
     }));
+  }
+
+  changePassword(newPassword: string){
+    console.log(newPassword)
+    this.apply(new ForgotPasswordEvent({
+      email: this.email,
+      subject: 'Forgot Password',
+      html: `<h1>Your new password: ${newPassword}</h1>`
+    }))
   }
 }

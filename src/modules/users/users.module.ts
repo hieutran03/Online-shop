@@ -29,6 +29,6 @@ import { QueueModule } from '../queue/queue.module';
     ...UsersQueryHandlers,
     ...UsersCommandHandlers, 
   ],
-  exports: [UsersService]
+  exports: [UsersService, UsersMapper]
 })
 export class UsersModule {}

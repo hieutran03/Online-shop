@@ -7,15 +7,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { CqrsModule } from '@nestjs/cqrs';
+import { AuthCommandHandler } from './commands/handler';
 
 @Module({
   controllers: [AuthController],
   providers: [
     AuthService,
     LocalStrategy,
-    JwtStrategy
+    JwtStrategy,
+    ...AuthCommandHandler,
   ],
   imports: [
+    CqrsModule,
     UsersModule, 
     PassportModule,
     ConfigModule,

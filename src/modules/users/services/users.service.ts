@@ -7,6 +7,10 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../commands/impl/create-user.command';
 import { FindByUsernameQuery } from '../queries/impl/find-by-username.query';
 import { FindByIdQuery } from '../queries/impl/find-by-id.query';
+import { FindAllQuery } from '../queries/impl/find-all.query';
+import { UpdateUserDto } from '../dtos/update-user.dto';
+import { UpdateUserCommand } from '../commands/impl/update-user.command';
+import { DeleteUserCommand } from '../commands/impl/delete-user.command';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +19,9 @@ export class UsersService {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus
   ){}
+  async findAll(){
+    return this.queryBus.execute(new FindAllQuery())
+  }
   async createUser(createUserDto: CreateUserDto){
     // const newUser = new UsersEntiy({
     //   ...createUserDto
@@ -31,4 +38,15 @@ export class UsersService {
   findById(id: number){
     return this.queryBus.execute(new FindByIdQuery(id));
   }
+
+  updateUser(id: number, updateUserDto: UpdateUserDto){
+    return this.commandBus.execute(new UpdateUserCommand(id, updateUserDto));
+  }
+
+  deleteUser(id: number){
+    return this.commandBus.execute(new DeleteUserCommand(id));
+  }
+  // changePassword(id: number, newPassword: string){
+  //   return this.commandBus.execute(new ChangePasswordCommand(id, newPassword));
+  // }
 }

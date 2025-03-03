@@ -1,5 +1,8 @@
 import { UpdateUserDto } from "../../dtos/update-user.dto";
 
 export class UpdateUserCommand{
-  constructor(public readonly updateUserDto: UpdateUserDto){}
+  constructor(
+    public readonly id: number,
+    public readonly updateUserDto: UpdateUserDto,
+  ){}
 }

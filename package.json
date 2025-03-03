@@ -22,11 +22,12 @@
     "migrate:generate": "npm run typeorm -- -d ./typeorm.config.ts migration:generate ./migrations/%npm_config_name%",
     "migrate:create": "npm run typeorm -- migration:create ./migrations/%npm_config_name%",
     "migrate:up": "npm run typeorm migration:run -- -d ./typeorm.config.ts",
+    "migrate:prod": "NODE_ENV=production && run migrate:up",
     "migrate:down": "npm run typeorm migration:revert -- -d ./typeorm.config.ts"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "@nestjs-modules/mailer": "^1.6.1",
+    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/cache-manager": "^3.0.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^4.0.0",
@@ -35,6 +36,7 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^11.0.6",
     "@nestjs/typeorm": "^11.0.0",
     "@types/amqplib": "^0.10.6",
     "@types/passport-jwt": "^4.0.1",
