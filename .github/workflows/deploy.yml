@@ -15,6 +15,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Pull Docker image
       run: docker pull hieutran03/online-shop:latest
+    - name: Start docker compose
+      run: cd Online-shop && docker-compose down && docker-compose up -d
     - name: Stop docker compose
       run: docker-compose down
     - name: Start docker compose
