@@ -5,7 +5,12 @@ import { Response } from 'express';
 import { LocalAuthenticationGuard } from 'src/core/guards/local-auth.guard';
 import { SigninDto } from '../dtos/sign-in.dto';
 import JwtAuthGuard from 'src/core/guards/jwt-auth.guard';
+import { ApiBody, ApiCookieAuth } from '@nestjs/swagger';
+import { LoginDto } from '../dtos/login.dto';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
 
+@ApiCookieAuth()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService){}
@@ -14,8 +19,10 @@ export class AuthController {
     return this.authService.register(signInDto);
   }
 
+
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
+  @ApiBody({type: LoginDto})
   login(@Req() request, @Res({passthrough: true}) response: Response) {
     const { user } = request;
     const token = this.authService.getCookieWithJwtToken(user.id);
@@ -30,12 +37,13 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('reset-password')
-  resetPassword(@Body() body){
-    return this.authService.resetPassword(body);
+  resetPassword(@Body() body: ResetPasswordDto, @Req() request){
+    const userId = request.user.id;
+    return this.authService.resetPassword(userId, body);
   }
 
   @Post('forgot-password')
-  forgotPassword(@Body() body){
+  forgotPassword(@Body() body: ForgotPasswordDto){
     return this.authService.forgotPassword(body);
   }
 

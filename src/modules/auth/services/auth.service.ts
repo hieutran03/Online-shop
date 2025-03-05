@@ -9,6 +9,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { ForgotPasswordCommand } from '../commands/impl/forgot-password.command';
 import { PasswordGeneratorUtil } from 'src/common/utils/password-gentaror.util';
 import { ResetPasswordCommand } from '../commands/impl/reset-password.command';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -82,9 +83,9 @@ export class AuthService {
     ));
   }
 
-  public async resetPassword(body){
+  public async resetPassword(userId: number, body: ResetPasswordDto){
     const hashedPassword = await bcrypt.hash(body.password, parseInt(this.configService.get('BCRYPT_SALT_ROUNDS')));
-    const user = await this.usersService.findById(body.id);
+    const user = await this.usersService.findById(userId);
     if(!user){
       throw new BadRequestException('User not found');
     }

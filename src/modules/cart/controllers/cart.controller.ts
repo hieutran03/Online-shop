@@ -8,13 +8,13 @@ import { UserRole } from "src/modules/users/entities/users.entity";
 export class CartController{
   constructor(private readonly cartService: CartService){}
   
-  @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR, UserRole.VIEWER]))
+  @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Get()
   findAll() {
     return this.cartService.findAll();
   }
 
-  @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR, UserRole.VIEWER]))
+  @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Get(':cartId')
   findById(@Param('cartId')id: number) {
     return this.cartService.findById(id);
