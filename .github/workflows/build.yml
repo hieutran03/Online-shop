@@ -1,26 +1,26 @@
-name: ci_build
+# name: ci_build
 
-on:
-  workflow_run:
-    workflows: ["ci_test"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["ci_test"]
+#     types:
+#       - completed
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+#     steps:
+#     - uses: actions/checkout@v4
 
-    - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+#     - name: Login to Docker Hub
+#       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t hieutran03/online-shop:latest .
+#     - name: Build Docker image
+#       run: docker build -t hieutran03/online-shop:latest .
 
-    - name: Verify built image
-      run: docker images
+#     - name: Verify built image
+#       run: docker images
 
-    - name: Push to Docker Hub
-      run: docker push hieutran03/online-shop:latest
+#     - name: Push to Docker Hub
+#       run: docker push hieutran03/online-shop:latest

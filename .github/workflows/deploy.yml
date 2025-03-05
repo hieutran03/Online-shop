@@ -1,10 +1,12 @@
 name: cd_deploy
 
 on:
-  workflow_run:
-    workflows: ["ci_build"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["ci_build"]
+  #   types:
+  #     - completed
+  push:
+    branches: [ "main" ]
 
 
 jobs:
@@ -16,7 +18,7 @@ jobs:
     - name: Pull Docker image
       run: docker pull hieutran03/online-shop:latest
     - name: Start docker compose
-      run: cd $GITHUB_WORKSPACE && docker-compose down && docker-compose up -d
+      run: cd ~/Online-shop && docker-compose down && docker-compose up -d
     - name: Stop docker compose
       run: docker-compose down
     - name: Start docker compose
