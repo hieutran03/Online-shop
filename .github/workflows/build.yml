@@ -21,7 +21,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build docker image
       run: 
-        docker build -t online-shop . 
+        docker build -t hieutran03/online-shop:latest .
     - name: Push to docker hub
       run:
         docker push hieutran03/online-shop:latest
