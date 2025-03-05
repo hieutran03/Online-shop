@@ -1,31 +1,25 @@
 name: cd_deploy
 
 on:
+  # workflow_run:
+  #   workflows: ["ci_build"]
+  #   types:
+  #     - completed
   push:
     branches: [ "main" ]
 
+
 jobs:
-  deploy:
+  build:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Docker
-      uses: docker/setup-buildx-action@v3
-
-    - name: Log in to Docker Hub (optional)
-      if: github.event_name != 'pull_request'
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
+    - uses: actions/checkout@v4
     - name: Pull Docker image
       run: docker pull hieutran03/online-shop:latest
-
-    - name: Start Docker Compose
-      run: |
-        cd $GITHUB_WORKSPACE  # Navigate to the repository directory
-        docker compose up -d  # Use 'docker compose' (V2) instead of 'docker-compose'
+    - name: Start docker compose
+      run: cd ~/Online-shop && docker-compose down && docker-compose up -d
+    - name: Stop docker compose
+      run: docker-compose down
+    - name: Start docker compose
+      run: docker-compose up -d
