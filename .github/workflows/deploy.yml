@@ -1,9 +1,9 @@
-name: build
+name: cd_deploy
 
 on:
   on:
   workflow_run:
-    workflows: ["build"]
+    workflows: ["ci_build"]
     types:
       - completed
 
