@@ -1,25 +1,21 @@
 name: cd_deploy
 
 on:
-  # workflow_run:
-  #   workflows: ["ci_build"]
-  #   types:
-  #     - completed
   push:
     branches: [ "main" ]
 
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Pull Docker image
       run: docker pull hieutran03/online-shop:latest
-    - name: Start docker compose
-      run: cd ~/Online-shop && docker-compose down && docker-compose up -d
-    - name: Stop docker compose
-      run: docker-compose down
-    - name: Start docker compose
-      run: docker-compose up -d
+
+    - name: Start Docker Compose
+      run: |
+        cd $GITHUB_WORKSPACE  # Navigate to the repository directory
+        docker-compose up -d
