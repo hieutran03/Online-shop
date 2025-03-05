@@ -1,7 +1,6 @@
 name: cd_deploy
 
 on:
-  on:
   workflow_run:
     workflows: ["ci_build"]
     types:
