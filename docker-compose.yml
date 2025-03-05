@@ -43,9 +43,10 @@ services:
       interval: 5s
       retries: 5
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: hieutran03/online-shop:latest
     container_name: nest-app
     env_file:
       - ./.env
