@@ -2,11 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsOptional } from "class-validator";
 
 export class CartItemDto {
-  @ApiProperty()
+  @ApiProperty({example: 1, description: 'Product ID'})
   @IsNumber()
   productId: number;
   
-  @ApiProperty()
+  @ApiProperty({example: 1, description: 'Product quantity'})
   @IsNumber()
   quantity: number;
 }

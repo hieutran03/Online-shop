@@ -2,11 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
 export class UpdateCategoryDto{
-  @ApiProperty()
+  @ApiProperty({example: 'Category name', description: 'Category name'})
   @IsString()
   name: string;
   
-  @ApiProperty()
+  @ApiProperty({example: 'Category description', description: 'Category description'})
   @IsString()
   description: string;
 }

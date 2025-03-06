@@ -2,26 +2,26 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class UpdateProductDto{
-  @ApiProperty()
+  @ApiProperty({example: 'Product name', description: 'Product name'})
   @IsString()
   @IsOptional()
   name: string;
   
-  @ApiProperty()
+  @ApiProperty({example: 'Product description', description: 'Product description'})
   @IsString()
   @IsOptional()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({example: 'https://example.com/image.jpg', description: 'Product images'})
   @IsString()
   @IsOptional()
   images: string;
 
-  @ApiProperty()
+  @ApiProperty({example: [1, 2, 3], description: 'Product categories'})
   @IsArray()
   categories: number[];
 
-  @ApiProperty()
+  @ApiProperty({example: 100, description: 'Product price'})
   @IsNumber()
   price: number;
 }
