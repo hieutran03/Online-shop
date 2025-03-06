@@ -17,7 +17,7 @@ export class UserCartController{
     return this.cartService.findById(user.cartId);
   }
 
-  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 201, description: 'Created'})
   @UseGuards(JwtAuthGuard)
   @Post()
   addItemToCart(

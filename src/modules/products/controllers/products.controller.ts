@@ -26,7 +26,7 @@ export class ProductsController {
     return this.productService.findById(productId);
   }
 
-  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 201, description: 'Created'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Post()

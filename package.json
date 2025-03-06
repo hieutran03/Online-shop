@@ -23,7 +23,9 @@
     "migrate:create": "npm run typeorm -- migration:create ./migrations/%npm_config_name%",
     "migrate:up": "npm run typeorm migration:run -- -d ./typeorm.config.ts",
     "migrate:prod": "NODE_ENV=production npm run typeorm migration:run -- -d ./typeorm.config.ts",
-    "migrate:down": "npm run typeorm migration:revert -- -d ./typeorm.config.ts"
+    "migrate:down": "npm run typeorm migration:revert -- -d ./typeorm.config.ts",
+    "seed:start": "ts-node ./src/database/seeds/script.seed.ts",
+    "seed:prod": "NODE_ENV=production ts-node ./src/database/seeds/script"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",

@@ -27,7 +27,7 @@ export class UsersController {
     return this.userService.findById(id)
   }
 
-  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 201, description: 'Created'})
   @ApiResponse({ status: 400, description: 'Bad Request'})
   @UseGuards(RBACGuard([UserRole.ADMIN])) 
   @Post()

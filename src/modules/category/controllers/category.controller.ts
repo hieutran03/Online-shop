@@ -22,7 +22,7 @@ export class CategoryController{
     return this.categoryService.findById(id);
   }
 
-  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 201, description: 'Created'})
   @ApiResponse({ status: 500, description: 'Bad Request'})
   @Post()
   createCategory(@Body() createCategoryDto: CreateCategoryDto){

@@ -32,7 +32,7 @@ export class CartController {
     return this.cartService.findById(id);
   }
 
-  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 201, description: 'Created'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Post(':cartId')

@@ -28,13 +28,14 @@ export class AuthController {
     const { user } = request;
     const token = this.authService.getCookieWithJwtToken(user.id);
     response.setHeader('Set-Cookie', token);
-    return user;
+    response.status(200).send(user);
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
   @Post('logout')
   logout(@Res({passthrough: true}) response: Response){
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+    response.sendStatus(200);
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
