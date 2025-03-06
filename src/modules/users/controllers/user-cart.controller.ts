@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
+import { ApiResponse } from "@nestjs/swagger";
 import { RequestWithUser } from "src/common/interfaces/request-with-user.interface";
 import JwtAuthGuard from "src/core/guards/jwt-auth.guard";
 import { CartItemDto } from "src/modules/cart/dtos/cart-item.dto";
@@ -8,6 +9,7 @@ import { CartService } from "src/modules/cart/services/cart.service";
 export class UserCartController{
   constructor(private readonly cartService: CartService){}
  
+  @ApiResponse({ status: 200, description: 'Success'})
   @UseGuards(JwtAuthGuard)
   @Get()
   getCart(@Req() requestWithUser: RequestWithUser){
@@ -15,6 +17,7 @@ export class UserCartController{
     return this.cartService.findById(user.cartId);
   }
 
+  @ApiResponse({ status: 200, description: 'Success'})
   @UseGuards(JwtAuthGuard)
   @Post()
   addItemToCart(
@@ -26,6 +29,8 @@ export class UserCartController{
     return this.cartService.addItemToCart(cartId, productId, quantity);
   }
 
+  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(JwtAuthGuard)
   @Patch()
   updateCartItem(
@@ -37,6 +42,8 @@ export class UserCartController{
     return this.cartService.updateCartItem(cartId, productId, quantity);
   }
 
+  @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(JwtAuthGuard)
   @Delete('/product/:productId')
   removeCartItem(

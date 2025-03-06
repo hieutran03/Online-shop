@@ -3,6 +3,7 @@ import { UpdateUserCommand } from "../impl/update-user.command";
 import { Repository } from "typeorm";
 import { UsersEntiy } from "../../entities/users.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { NotFoundException } from "@nestjs/common";
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand>{
@@ -13,7 +14,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand>{
   async execute({updateUserDto, id}: UpdateUserCommand) {
     const user = await this.userRepository.findOne({where: {id}});
     if(!user){
-      throw new Error("User not found");
+      throw new NotFoundException('User not found');
     }
     const updatedUser = await this.userRepository.save({
       ...user,

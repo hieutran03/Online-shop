@@ -9,6 +9,7 @@ import { DeleteProductCommand } from '../commands/impl/delete-product.command';
 import { QueryFilterDto } from '../dtos/query-options.dto';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
+import { NotFoundException } from '@nestjs/common';
 
 describe('ProductsService', () => {
   let service: ProductsService;
@@ -56,6 +57,22 @@ describe('ProductsService', () => {
         new FindByIdQuery(productId),
       );
       expect(result).toEqual(expectedResult);
+    });
+
+    it('should throw exception if product not found', async () => {
+      const productId = 1;
+
+      jest
+        .spyOn(queryBus, 'execute')
+        .mockRejectedValue(new NotFoundException());
+
+      await expect(service.findById(productId)).rejects.toThrow(
+        NotFoundException,
+      );
+
+      expect(queryBus.execute).toHaveBeenCalledWith(
+        new FindByIdQuery(productId),
+      );
     });
   });
 
@@ -118,6 +135,29 @@ describe('ProductsService', () => {
       );
       expect(result).toEqual(expectedResult);
     });
+
+    it('should throw exception if product not found', async () => {
+      const productId = 1;
+      const updateProductDto: UpdateProductDto = {
+        name: 'Updated Product',
+        price: 200,
+        description: 'Test',
+        categories: [1],
+        images: 'test',
+      };
+
+      jest
+        .spyOn(commandBus, 'execute')
+        .mockRejectedValue(new NotFoundException());
+
+      await expect(service.updateProduct(productId, updateProductDto)).rejects.toThrow(
+        NotFoundException,
+      );
+
+      expect(commandBus.execute).toHaveBeenCalledWith(
+        new UpdateProductCommand(productId, updateProductDto),
+      );
+    });
   });
 
   describe('deleteProduct', () => {
@@ -134,5 +174,20 @@ describe('ProductsService', () => {
       );
       expect(result).toEqual(expectedResult);
     });
+    it('should throw exception if product not found', async () => {
+      const productId = 1;
+
+      jest
+        .spyOn(commandBus, 'execute')
+        .mockRejectedValue(new NotFoundException());
+
+      await expect(service.deleteProduct(productId)).rejects.toThrow(
+        NotFoundException,
+      );
+
+      expect(commandBus.execute).toHaveBeenCalledWith(
+        new DeleteProductCommand(productId),
+      );
+    })
   });
 });
