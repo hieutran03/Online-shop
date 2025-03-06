@@ -10,6 +10,7 @@ export class UserCartController{
   constructor(private readonly cartService: CartService){}
  
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @UseGuards(JwtAuthGuard)
   @Get()
   getCart(@Req() requestWithUser: RequestWithUser){
@@ -18,6 +19,7 @@ export class UserCartController{
   }
 
   @ApiResponse({ status: 201, description: 'Created'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @UseGuards(JwtAuthGuard)
   @Post()
   addItemToCart(
@@ -30,6 +32,7 @@ export class UserCartController{
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(JwtAuthGuard)
   @Patch()
@@ -43,6 +46,7 @@ export class UserCartController{
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(JwtAuthGuard)
   @Delete('/product/:productId')

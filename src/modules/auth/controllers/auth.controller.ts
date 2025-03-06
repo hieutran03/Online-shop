@@ -17,6 +17,8 @@ import { UserDto } from '../dtos/user.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService){}
   
+  @ApiResponse({status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @Get('my-profile')
   @UseGuards(JwtAuthGuard)
   myProfile(@Req() request){
@@ -24,6 +26,7 @@ export class AuthController {
   }
   
   @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
+  @ApiResponse({ status: 400, description: 'Bad Request'})
   @Post('signin')
   signin(@Body() signInDto: SigninDto){
     return this.authService.register(signInDto);
@@ -31,6 +34,7 @@ export class AuthController {
 
   @ApiResponse({ status: 200, description: 'Success'})
   @ApiResponse({ status: 400, description: 'Bad Request'})
+  @ApiResponse({ status: 500, description: 'Internal Server Error'})
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
   @ApiBody({type: LoginDto})
@@ -50,6 +54,7 @@ export class AuthController {
 
   @ApiResponse({ status: 200, description: 'Success'})
   @ApiResponse({ status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
   @ApiResponse({ status: 500, description: 'Internal Server Error'})
   @UseGuards(JwtAuthGuard)
   @Post('reset-password')

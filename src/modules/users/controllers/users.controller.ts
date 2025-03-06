@@ -13,6 +13,8 @@ export class UsersController {
   ){}
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Get()
   async findAll(){
@@ -20,6 +22,8 @@ export class UsersController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Get(':id')
@@ -29,6 +33,8 @@ export class UsersController {
 
   @ApiResponse({ status: 201, description: 'Created'})
   @ApiResponse({ status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @UseGuards(RBACGuard([UserRole.ADMIN])) 
   @Post()
   async createUser(@Body()createUserDto: CreateUserDto){
@@ -36,6 +42,8 @@ export class UsersController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Patch(':id')
@@ -47,6 +55,8 @@ export class UsersController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Delete(':id')

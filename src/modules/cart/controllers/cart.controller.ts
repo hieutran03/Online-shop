@@ -26,6 +26,8 @@ export class CartController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Get(':cartId')
   findById(@Param('cartId') id: number) {
@@ -33,6 +35,8 @@ export class CartController {
   }
 
   @ApiResponse({ status: 201, description: 'Created'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Post(':cartId')
@@ -44,6 +48,8 @@ export class CartController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Patch(':cartId')
@@ -55,6 +61,8 @@ export class CartController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Delete(':cartId/product/:productId')

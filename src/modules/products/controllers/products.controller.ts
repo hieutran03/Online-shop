@@ -27,6 +27,8 @@ export class ProductsController {
   }
 
   @ApiResponse({ status: 201, description: 'Created'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Post()
@@ -35,6 +37,8 @@ export class ProductsController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN, UserRole.EDITOR]))
   @Patch(':productId')
@@ -46,6 +50,8 @@ export class ProductsController {
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
+  @ApiResponse({status: 401, description: 'Unauthorized'})
+  @ApiResponse({status: 403, description: 'Forbidden'})
   @ApiResponse({ status: 404, description: 'Not Found'})
   @UseGuards(RBACGuard([UserRole.ADMIN]))
   @Delete(':productId')
