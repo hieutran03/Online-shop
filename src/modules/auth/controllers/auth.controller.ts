@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { Response } from 'express';
 import { LocalAuthenticationGuard } from 'src/core/guards/local-auth.guard';
@@ -8,11 +8,21 @@ import { ApiBody, ApiCookieAuth, ApiResponse } from '@nestjs/swagger';
 import { LoginDto } from '../dtos/login.dto';
 import { ResetPasswordDto } from '../dtos/reset-password.dto';
 import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
+import { Serialize } from 'src/core/interceptors/serialize.interceptor';
+import { UserDto } from '../dtos/user.dto';
 
+@Serialize(UserDto)
 @ApiCookieAuth()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService){}
+  
+  @Get('my-profile')
+  @UseGuards(JwtAuthGuard)
+  myProfile(@Req() request){
+    return request.user;
+  }
+  
   @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
   @Post('signin')
   signin(@Body() signInDto: SigninDto){
@@ -55,5 +65,4 @@ export class AuthController {
   forgotPassword(@Body() body: ForgotPasswordDto){
     return this.authService.forgotPassword(body);
   }
-
 }
