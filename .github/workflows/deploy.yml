@@ -1,25 +1,25 @@
-name: cd_deploy
+# name: cd_deploy
 
-on:
-  # workflow_run:
-  #   workflows: ["ci_build"]
-  #   types:
-  #     - completed
-  push:
-    branches: [ "main" ]
+# on:
+#   # workflow_run:
+#   #   workflows: ["ci_build"]
+#   #   types:
+#   #     - completed
+#   push:
+#     branches: [ "main" ]
 
 
-jobs:
-  build:
-    runs-on: self-hosted
+# jobs:
+#   build:
+#     runs-on: self-hosted
   
-    steps:
-    - uses: actions/checkout@v4
-    - name: Pull Docker image
-      run: docker pull hieutran03/online-shop:latest
-    - name: Start docker compose
-      run: cd ~/Online-shop && docker-compose down && docker-compose up -d
-    - name: Stop docker compose
-      run: docker-compose down
-    - name: Start docker compose
-      run: docker-compose up -d
+#     steps:
+#     - uses: actions/checkout@v4
+#     - name: Pull Docker image
+#       run: docker pull hieutran03/online-shop:latest
+#     - name: Start docker compose
+#       run: cd ~/Online-shop && docker-compose down && docker-compose up -d
+#     - name: Stop docker compose
+#       run: docker-compose down
+#     - name: Start docker compose
+#       run: docker-compose up -d

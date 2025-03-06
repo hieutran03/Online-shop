@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
@@ -14,6 +14,8 @@ import { CartModule } from './modules/cart/cart.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './config/redis.config';
 import { EmailModule } from './modules/email/email.module';
+import { LoggingMiddleware } from './core/middlewares/logger.middleware';
+import { WinstonLoggerService } from './common/logger/winston.logger';
 
 @Module({
   imports: [
@@ -48,6 +50,12 @@ import { EmailModule } from './modules/email/email.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    WinstonLoggerService
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+
+}
