@@ -21,11 +21,11 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "migrate:generate": "npm run typeorm -- -d ./typeorm.config.ts migration:generate ./migrations/%npm_config_name%",
     "migrate:create": "npm run typeorm -- migration:create ./migrations/%npm_config_name%",
-    "migrate:up": "npm run typeorm migration:run -- -d ./typeorm.config.ts",
-    "migrate:prod": "NODE_ENV=production npm run typeorm migration:run -- -d ./typeorm.config.ts",
-    "migrate:down": "npm run typeorm migration:revert -- -d ./typeorm.config.ts",
-    "seed:start": "ts-node ./src/database/seeds/script.seed.ts",
-    "seed:prod": "NODE_ENV=production ts-node ./src/database/seeds/script"
+    "migrate:up": "npx typeorm migration:run -d dist/typeorm.config.js",
+    "migrate:prod": "NODE_ENV=production npx typeorm migration:run -d dist/typeorm.config.js",
+    "migrate:down": "npx typeorm migration:revert -d dist/typeorm.config.js",
+    "seed:start": "ts-node ./dist/src/database/seeds/script.seed.js",
+    "seed:prod": "NODE_ENV=production ts-node ./dist/src/database/seeds/script.seed.js"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",

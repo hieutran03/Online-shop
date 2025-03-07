@@ -12,6 +12,8 @@ export default new DataSource({
   database: configService.getOrThrow('POSTGRES_DB'),
   username: configService.getOrThrow('POSTGRES_USER'),
   password: configService.getOrThrow('POSTGRES_PASSWORD'),
-  migrations: ["migrations/**"],
-  entities: [`${__dirname}/**/*.entity.{ts,js}`]
+  // migrations: ["migrations/**"],
+  // entities: [`${__dirname}/**/*.entity.{ts,js}`]
+  entities: [`${__dirname}/dist/**/*.entity.{ts,js}`],
+  migrations: ['dist/migrations/*{.ts,.js}'],
 });

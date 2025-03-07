@@ -42,7 +42,7 @@ export class AuthController {
     const { user } = request;
     const token = this.authService.getCookieWithJwtToken(user.id);
     response.setHeader('Set-Cookie', token);
-    response.status(200).send(user);
+    response.status(200);
   }
 
   @ApiResponse({ status: 200, description: 'Success'})
